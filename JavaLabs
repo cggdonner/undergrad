@@ -1,0 +1,113 @@
+This is a text file of a couple of labs that I did during my last semester of undergrad. This is written in Java.
+
+Lab 8: Build a 2D Array
+
+import java.util.Scanner;
+
+public class Lab08_Build_2DArray {
+	public static void main(String[] args) {
+		
+		Scanner console = new Scanner(System.in);
+		System.out.print("Enter the number of rows: ");
+		int nRows = Integer.parseInt( console.nextLine() ); 
+		nRows = Math.max(0, nRows);
+		
+		// Define the arrays:
+		String [] inputData;
+		int[][] data = new int[nRows][]; // allocate number of rows
+      int ir, ic;
+
+		// For each row:
+      for (ir = 0; ir < nRows; ir++) {
+			System.out.print("Enter a row of comma separated numbers: ");
+			String input= console.nextLine();
+			
+		      // For each String, convert and place in the 2D-array.
+			inputData = input.split(",");
+			data[ir] = new int[inputData.length]; // allocate row length
+			for(ic = 0; ic < inputData.length; ic++) {
+				data[ir][ic] = Integer.parseInt(inputData[ic].trim());
+			}
+      }
+		
+		
+		/*
+		 * Display the 2D-array in table format using a nested for-loop:
+		 */
+			for(ir = 0; ir < nRows; ir++) {
+				for(ic = 0; ic < data[ir].length; ic++) {
+					System.out.printf( "%5d", data[ir][ic] );
+				}
+				System.out.println();
+			}
+		     
+
+		console.close();
+	}
+}
+
+Lab 14: Sorting
+
+import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Lab14Sort {
+
+	public static void main(String[] args) throws IOException {
+		
+		String filename = null;
+		Scanner scnr = null ;
+		Scanner tokens = null;
+		double value = 0.0;
+// 1. Instantiate an ArrayList object named myList for type Double.
+		ArrayList<Double> myList = new ArrayList<Double>();
+// This logic will use the command line argument or prompt for input:	
+      if ( args.length != 0 ) // args is an array!
+			filename = args[0];
+		else {
+			scnr = new Scanner( System.in );
+			filename = scnr.nextLine().strip();
+		}
+
+// 2. Open the file to read using the File and Scanner classes:
+		File fHandle = new File(filename);
+		tokens = new Scanner(fHandle);
+
+		int counter = 0;  // This counts the numbers as they are read.
+		 
+		myList.add( tokens.nextDouble() ); // put first item in list.
+		++counter;				  // Count it.
+			
+		while ( tokens.hasNext() ) {
+		// 3. Get the next number from the data file.
+			myList.add( tokens.nextDouble() );
+			++counter;		
+		// 4. Place the current number into your list and count it.
+		} // repeat until all numbers are loaded into the ArrayList.
+		// 5. Confirm your ArrayList is populated with the data by printing
+			
+			    int size = myList.size();
+
+			    for (int step = 0; step < size; step++) {
+			      double key = myList.get(step);
+			      int j = step - 1;
+
+			      
+			      while (j >= 0 && key < myList.get(j)) {
+			        myList.set(j + 1, myList.get(j));
+			        --j;
+			      }
+
+			      myList.set(j + 1, key);
+			    }
+			
+	for(double dataVal: myList) {
+		System.out.printf( "%.3f\n",  dataVal );
+	}
+		
+      if ( scnr != null ) { scnr.close(); }
+		if ( tokens != null ) { tokens.close(); }	
+	}
+}
